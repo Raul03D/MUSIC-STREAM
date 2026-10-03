@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Groovify - Listen to Music & Stream Original Tracks</title>
+  <meta name="description" content="Groovify is a premium dark-themed music streaming platform for music lovers and artists. Discover trending synthwave, lo-fi, electronic, and pop songs." />
+  <meta name="theme-color" content="#121212" />
+
+  <!-- Google Fonts & Style -->
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231db954'><circle cx='12' cy='12' r='10'/><path d='M8 12l8-5v10z' fill='%23000'/></svg>" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- ====================================================================
+         LEFT SIDEBAR
+         ==================================================================== -->
+    <aside class="sidebar">
+      <!-- Nav Panel -->
+      <div class="sidebar-nav-panel">
+        <a class="brand-logo" onclick="window.Groovify.navigateTo('home')">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+          </div>
+          <span>Groovify</span>
+          <span class="brand-tag">PRO</span>
+        </a>
+
+        <ul class="nav-list">
+          <li>
+            <a class="nav-item active" data-view="home" data-action="nav" data-target="home">
+              <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+              <span>Home</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" data-view="search" data-action="nav" data-target="search">
+              <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              <span>Search</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" data-view="liked" data-action="nav" data-target="liked">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <span>Liked Songs</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" data-view="studio" data-action="nav" data-target="studio">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+              <span>Artist Studio</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Library Panel -->
+      <div class="sidebar-library-panel">
+        <div class="library-header">
+          <div class="library-title" data-action="nav" data-target="home">
+            <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+            <span>Your Library</span>
+          </div>
+          <div class="library-actions">
+            <button class="icon-button" onclick="window.Groovify.navigateTo('studio')" title="Create Album or Track">
+              <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="library-filters">
+          <button class="pill-filter active" onclick="window.Groovify.navigateTo('home')">Playlists</button>
+          <button class="pill-filter" onclick="window.Groovify.navigateTo('search')">Albums</button>
+          <button class="pill-filter" onclick="window.Groovify.navigateTo('studio')">Artists</button>
+        </div>
+
+        <div class="library-list" id="sidebarLibraryList">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+        <div class="artist-promo-box">
+          <h4>Are you a Music Producer?</h4>
+          <p>Upload your tracks, create studio albums, and reach listeners worldwide.</p>
+          <button class="btn-primary" style="padding: 6px 14px; font-size:12px; align-self:flex-start; margin-top:4px;" onclick="window.Groovify.navigateTo('studio')">Open Studio</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         MAIN VIEWPORT
+         ==================================================================== -->
+    <main class="main-content" id="mainContent">
+      <div class="ambient-glow" id="ambientGlow"></div>
+
+      <!-- Top Sticky Navigation Bar -->
+      <header class="top-bar" id="topBar">
+        <div class="top-bar-left">
+          <div class="history-buttons">
+            <button class="history-btn" id="topHistoryBack" onclick="window.Groovify.goBack()" title="Go back" style="opacity: 0.35; cursor: not-allowed;" disabled>
+              <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            </button>
+            <button class="history-btn" id="topHistoryForward" onclick="window.Groovify.goForward()" title="Go forward" style="opacity: 0.35; cursor: not-allowed;" disabled>
+              <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+            </button>
+          </div>
+
+          <!-- Dynamic Search Input -->
+          <div class="top-search-wrapper" id="topSearchWrapper" style="display:none;">
+            <svg class="search-icon-inside" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" class="top-search-input" id="topSearchInput" placeholder="What do you want to play?" />
+          </div>
+        </div>
+
+        <div class="top-bar-right">
+          <div id="userSection">
+            <!-- Rendered by app.js: Profile chip or Login/Signup buttons -->
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Views Container -->
+      <div class="view-container" id="viewContainer">
+        <!-- Rendered by app.js -->
+      </div>
+    </main>
+
+    <!-- ====================================================================
+         BOTTOM DOCKED AUDIO PLAYER (SPOTIFY STYLE)
+         ==================================================================== -->
+    <footer class="player-dock">
+      <!-- Player Left: Track Details & Heart -->
+      <div class="player-left">
+        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200&auto=format&fit=crop&q=80" id="playerThumb" class="player-thumb" alt="Track Cover" />
+        <div class="player-track-info">
+          <span class="player-track-title" id="playerTitle">Select a track</span>
+          <span class="player-track-artist" id="playerArtist">Groovify Music</span>
+        </div>
+        <button class="heart-action-btn" id="playerLikeBtn" title="Save to Liked Songs">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </button>
+      </div>
+
+      <!-- Player Center: Playback Controls & Progress Bar -->
+      <div class="player-center">
+        <div class="player-buttons">
+          <button class="control-btn" id="shuffleBtn" title="Shuffle">
+            <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+          </button>
+          <button class="control-btn" id="prevBtn" title="Previous Track">
+            <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+          <button class="play-pause-btn" id="playPauseBtn" title="Play / Pause">
+            <svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          </button>
+          <button class="control-btn" id="nextBtn" title="Next Track">
+            <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+          </button>
+          <button class="control-btn" id="repeatBtn" title="Repeat">
+            <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+          </button>
+        </div>
+
+        <!-- Scrubber -->
+        <div class="scrubber-wrapper">
+          <span class="time-stamp" id="currentTimeText">0:00</span>
+          <div class="progress-bar-container" id="progressBarContainer">
+            <div class="progress-track" id="progressTrack">
+              <div class="progress-fill" id="progressFill">
+                <div class="progress-handle"></div>
+              </div>
+            </div>
+          </div>
+          <span class="time-stamp" id="totalDurationText">3:00</span>
+        </div>
+      </div>
+
+      <!-- Player Right: Visualizer, Queue, Volume, Fullscreen -->
+      <div class="player-right">
+        <!-- Live Audio Frequency Visualizer Mini Canvas -->
+        <canvas class="visualizer-canvas-mini" id="visualizerCanvasMini" width="70" height="24" title="Live Audio Visualizer"></canvas>
+
+        <button class="control-btn" onclick="window.Groovify.toggleQueueDrawer()" title="Play Queue">
+          <svg viewBox="0 0 24 24"><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
+        </button>
+
+        <div class="volume-wrapper">
+          <button class="control-btn" id="volumeBtn" title="Mute / Unmute">
+            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+          </button>
+          <div class="progress-bar-container" style="flex:1;">
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" style="width:100%; accent-color:var(--spotify-green); cursor:pointer;" />
+          </div>
+        </div>
+
+        <button class="control-btn" onclick="window.Groovify.toggleFullscreen()" title="Fullscreen Player">
+          <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ====================================================================
+       AUTHENTICATION MODAL
+       ==================================================================== -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="window.Groovify.closeModals()">
+        <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login" onclick="window.Groovify.switchAuthTab('login')">Log In</button>
+        <button class="auth-tab" data-tab="register" onclick="window.Groovify.switchAuthTab('register')">Sign Up</button>
+      </div>
+
+      <form id="authForm" data-mode="login" onsubmit="window.Groovify.handleAuthSubmit(event)">
+        <div class="form-group" style="margin-bottom:14px;">
+          <label for="authUsername">Username or Email *</label>
+          <input type="text" id="authUsername" class="form-input" placeholder="Enter username or email" required />
+        </div>
+
+        <div class="form-group" style="margin-bottom:14px;">
+          <label for="authPassword">Password *</label>
+          <input type="password" id="authPassword" class="form-input" placeholder="Enter password (min 6 chars)" required />
+        </div>
+
+        <div class="form-group" id="roleFieldGroup" style="display:none; margin-bottom:14px;">
+          <label for="authEmail">Email Address *</label>
+          <input type="email" id="authEmail" class="form-input" placeholder="e.g. user@groovify.io" style="margin-bottom:12px;" />
+          <label for="authRoleSelect">Account Type</label>
+          <select id="authRoleSelect" class="form-select">
+            <option value="user">Music Listener (Browse & Like Songs)</option>
+            <option value="artist">Artist & Producer (Upload Tracks & Albums)</option>
+          </select>
+        </div>
+
+        <button type="submit" id="authSubmitBtn" class="btn-primary" style="width:100%; margin-top:8px;">
+          Log In
+        </button>
+      </form>
+
+      <!-- 1-Click Demo Login Shortcuts -->
+      <div class="quick-demo-container">
+        <span class="demo-title">⚡ Instant 1-Click Demo Accounts</span>
+        <div class="demo-btn-row">
+          <button class="demo-chip-btn" onclick="window.Groovify.quickLogin('demo_listener', 'password123')">
+            🎧 Demo Listener
+          </button>
+          <button class="demo-chip-btn" onclick="window.Groovify.quickLogin('demo_artist', 'password123')">
+            🎙️ Demo Artist
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       QUEUE DRAWER
+       ==================================================================== -->
+  <div class="modal-overlay" id="queueDrawer">
+    <div class="modal-box" style="max-width: 480px; max-height: 80vh; display:flex; flex-direction:column;">
+      <button class="modal-close-btn" onclick="window.Groovify.closeModals()">
+        <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+
+      <h2 style="font-size:22px; font-weight:800; margin-bottom:16px;">Play Queue</h2>
+      <div id="queueItemsContainer" style="overflow-y:auto; flex:1; display:flex; flex-direction:column; gap:6px;">
+        <!-- Filled dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       FULLSCREEN IMMERSIVE VISUALIZER OVERLAY
+       ==================================================================== -->
+  <div class="fullscreen-overlay" id="fullscreenOverlay">
+    <button class="history-btn" style="position:absolute; top:24px; right:24px; z-index:10; width:44px; height:44px;" onclick="window.Groovify.toggleFullscreen()">
+      <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    </button>
+
+    <div class="fullscreen-content">
+      <img src="" id="fullscreenArt" class="fullscreen-art" alt="Track Art" />
+      <div>
+        <h1 class="fullscreen-title" id="fullscreenTitle">Track Title</h1>
+        <p class="fullscreen-artist" id="fullscreenArtist">Artist</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- App Script -->
+  <script src="/js/app.js"></script>
+</body>
+</html>
